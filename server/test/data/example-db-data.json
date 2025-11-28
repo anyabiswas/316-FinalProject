@@ -1,0 +1,606 @@
+{
+    "users": [
+        {
+            "firstName": "Joe",
+            "lastName": "Shmo",
+            "email": "joe@shmo.com",
+            "passwordHash": "$2a$10$dPEwsAVi1ojv2RfxxTpZjuKSAbep7zEKb5myegm.ATbQ4sJk4agGu",
+            "playlists": [
+                "68f524b611e0f3901871f164",
+                "68f526c1ec1ea2ad00a6fae0"
+            ]
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "email": "jane@doe.com",
+            "passwordHash": "$2a$10$dPEwsAVi1ojv2RfxxTpZjuKSAbep7zEKb5myegm.ATbQ4sJk4agGu",
+            "playlists": [
+                "68f526c4ec1ea2ad00a6fae8"
+            ]
+        },
+        {
+            "firstName": "Anya",
+            "lastName": "Biswas",
+            "email": "anya@biswas.com",
+            "passwordHash": "$2a$10$dPEwsAVi1ojv2RfxxTpZjuKSAbep7zEKb5myegm.ATbQ4sJk4agGu",
+            "playlists": [
+                "68facce8cf18ad334a9fe6b9",
+                "6905e7b8f3351a6f272008fe",
+                "69083d40cfc0dd8016cf7ac1"
+            ]
+        }
+    ],
+    "playlists": [
+        {
+            "_id": "68f524b611e0f3901871f164",
+            "ownerEmail": "joe@shmo.com",
+            "name": "Spacey",
+            "songs": [
+                {
+                    "title": "Across the Universe",
+                    "artist": "The Beatles",
+                    "year": 1969,
+                    "youTubeId": "90M60PzmxEE"
+                },
+                {
+                    "title": "Astronomy Domine",
+                    "artist": "Pink Floyd",
+                    "year": 1967,
+                    "youTubeId": "8UbNbor3OqQ"
+                },
+                {
+                    "title": "Black Hole Sun",
+                    "artist": "Soundgarden",
+                    "year": 1994,
+                    "youTubeId": "3mbBbFH9fAg"
+                },
+                {
+                    "title": "Brain Damage/Eclipse",
+                    "artist": "Pink Floyd",
+                    "year": 1973,
+                    "youTubeId": "g1OOQP1-wOE"
+                },
+                {
+                    "title": "Fly Me to the Moon",
+                    "artist": "Frank Sinatra",
+                    "year": 1964,
+                    "youTubeId": "ZEcqHA7dbwM"
+                },
+                {
+                    "title": "In the Meantime",
+                    "artist": "Spacehog",
+                    "year": 1994,
+                    "youTubeId": "PCsGRCf8T9Y"
+                },
+                {
+                    "title": "Major Tom",
+                    "artist": "Peter Shilling",
+                    "year": 1982,
+                    "youTubeId": "wO0A0XcWy88"
+                },
+                {
+                    "title": "Man on the Moon",
+                    "artist": "REM",
+                    "year": 1992,
+                    "youTubeId": "dLxpNiF0YKs"
+                },
+                {
+                    "title": "Rocket Man",
+                    "artist": "Elton John",
+                    "year": 1972,
+                    "youTubeId": "DtVBCG6ThDk"
+                },
+                {
+                    "title": "Set the Controls for the Heart of the Sun",
+                    "artist": "Pink Floyd",
+                    "year": 1968,
+                    "youTubeId": "qupVCTn5Dko"
+                },
+                {
+                    "title": "Space Oddity",
+                    "artist": "David Bowie",
+                    "year": 1969,
+                    "youTubeId": "iYYRH4apXDo"
+                },
+                {
+                    "title": "Space Song",
+                    "artist": "Beach House",
+                    "year": 2015,
+                    "youTubeId": "RBtlPT23PTM"
+                },
+                {
+                    "title": "Starless",
+                    "artist": "King Crimson",
+                    "year": 1974,
+                    "youTubeId": "OfR6_V91fG8"
+                },
+                {
+                    "title": "Starman",
+                    "artist": "David Bowie",
+                    "year": 1972,
+                    "youTubeId": "t365MuktYQs"
+                },
+                {
+                    "title": "Starship Trooper",
+                    "artist": "Yes",
+                    "year": 1971,
+                    "youTubeId": "xk4U8BembHM"
+                }
+            ]
+        },
+        {
+            "_id": "68f526c1ec1ea2ad00a6fae0",
+            "ownerEmail": "joe@shmo.com",
+            "name": "Any Colour You Like",
+            "songs": [
+                {
+                    "title": "99 Red Balloons",
+                    "artist": "Nena",
+                    "year": 1984,
+                    "youTubeId": "Fpu5a0Bl8eY"
+                },
+                {
+                    "title": "Big Blue Sun",
+                    "artist": "Adrian Belew",
+                    "year": 1986,
+                    "youTubeId": "DMkEmW2awQw"
+                },
+                {
+                    "title": "Black Dog",
+                    "artist": "Led Zeppelin",
+                    "year": 1971,
+                    "youTubeId": "2KPEHohJMuw"
+                },
+                {
+                    "title": "Golden Brown",
+                    "artist": "The Stranglers",
+                    "year": 1981,
+                    "youTubeId": "7KIHvuMl4Kk"
+                },
+                {
+                    "title": "Goodbye Yellow Brick Road",
+                    "artist": "Elton John",
+                    "year": 1973,
+                    "youTubeId": "wy709iNG6i8"
+                },
+                {
+                    "title": "Green is the Colour",
+                    "artist": "Pink Floyd",
+                    "year": 1969,
+                    "youTubeId": "4XeWngFZaa8"
+                },
+                {
+                    "title": "In the Court of the Crimson King",
+                    "artist": "King Crimson",
+                    "year": 1969,
+                    "youTubeId": "ukgraQ-xkp4"
+                },
+                {
+                    "title": "Orange Crush",
+                    "artist": "REM",
+                    "year": 1988,
+                    "youTubeId": "_mSmOcmk7uQ"
+                },
+                {
+                    "title": "Pink Houses",
+                    "artist": "John Mellancamp",
+                    "year": 1983,
+                    "youTubeId": "qOfkpu6749w"
+                },
+                {
+                    "title": "Purple Rain",
+                    "artist": "Prince",
+                    "year": 1984,
+                    "youTubeId": "TvnYmWpD_T8"
+                },
+                {
+                    "title": "White Lines",
+                    "artist": "Grandmaster Flash and the Furious Five",
+                    "year": 1983,
+                    "youTubeId": "DwRXI-y6M9o"
+                }
+            ]
+        },
+        {
+            "_id": "68f526c4ec1ea2ad00a6fae8",
+            "ownerEmail": "jane@doe.com",
+            "name": "Don't be Rude",
+            "songs": [
+                {
+                    "title": "A Message to You Rudy",
+                    "artist": "The Specials",
+                    "year": 1979,
+                    "youTubeId": "cntvEDbagAw"
+                },
+                {
+                    "title": "Rudie Can't Fail",
+                    "artist": "The Clash",
+                    "year": 1979,
+                    "youTubeId": "uEK9oK02D1M"
+                }
+            ]
+        },
+        {
+            "_id": "68facce8cf18ad334a9fe6b9",
+            "ownerEmail": "anya@biswas.com",
+            "name": "Old Songs I Like",
+        "songs": [
+            {
+            "title": "Hotel California",
+            "artist": "Eagles",
+            "year": 1977,
+            "youTubeId": "EqPtz5qN7HM"
+            },
+            {
+            "title": "Imagine",
+            "artist": "John Lennon",
+            "year": 1971,
+            "youTubeId": "YkgkThdzX-8"
+            },
+            {
+            "title": "Bohemian Rhapsody",
+            "artist": "Queen",
+            "year": 1975,
+            "youTubeId": "fJ9rUzIMcZQ"
+            },
+            {
+            "title": "Let It Be",
+            "artist": "The Beatles",
+            "year": 1970,
+            "youTubeId": "QDYfEBY9NM4"
+            },
+            {
+            "title": "Sweet Caroline",
+            "artist": "Neil Diamond",
+            "year": 1969,
+            "youTubeId": "NsLyI1_R01M"
+            },
+            {
+            "title": "Dancing Queen",
+            "artist": "ABBA",
+            "year": 1976,
+            "youTubeId": "xFrGuyw1V8s"
+            },
+            {
+            "title": "Every Breath You Take",
+            "artist": "The Police",
+            "year": 1983,
+            "youTubeId": "OMOGaugKpzs"
+            },
+            {
+            "title": "Piano Man",
+            "artist": "Billy Joel",
+            "year": 1973,
+            "youTubeId": "gxEPV4kolz0"
+            },
+            {
+            "title": "Yesterday",
+            "artist": "The Beatles",
+            "year": 1965,
+            "youTubeId": "NrgmdOz227I"
+            },
+            {
+            "title": "My Girl",
+            "artist": "The Temptations",
+            "year": 1964,
+            "youTubeId": "6IUG-9jZD-g"
+            },
+            {
+            "title": "Stayin' Alive",
+            "artist": "Bee Gees",
+            "year": 1977,
+            "youTubeId": "I_izvAbhExY"
+            },
+            {
+            "title": "Suspicious Minds",
+            "artist": "Elvis Presley",
+            "year": 1969,
+            "youTubeId": "eS4Wz2WvjpE"
+            },
+            {
+            "title": "Take It Easy",
+            "artist": "Eagles",
+            "year": 1972,
+            "youTubeId": "1IYlnI1pLE0"
+            },
+            {
+            "title": "Superstition",
+            "artist": "Stevie Wonder",
+            "year": 1972,
+            "youTubeId": "0CFuCYNx-1g"
+            },
+            {
+            "title": "Born to Run",
+            "artist": "Bruce Springsteen",
+            "year": 1975,
+            "youTubeId": "IxuThNgl3YA"
+            },
+            {
+            "title": "American Pie",
+            "artist": "Don McLean",
+            "year": 1971,
+            "youTubeId": "uAsV5-Hv-7U"
+            },
+            {
+            "title": "Bridge Over Troubled Water",
+            "artist": "Simon & Garfunkel",
+            "year": 1970,
+            "youTubeId": "H_a46WJ1viA"
+            },
+            {
+            "title": "Sweet Home Alabama",
+            "artist": "Lynyrd Skynyrd",
+            "year": 1974,
+            "youTubeId": "ye5BuYf8q4o"
+            },
+            {
+            "title": "Hotel Yorba",
+            "artist": "The White Stripes",
+            "year": 2001,
+            "youTubeId": "XFMhkhVsxF4"
+            },
+            {
+            "title": "Go Your Own Way",
+            "artist": "Fleetwood Mac",
+            "year": 1976,
+            "youTubeId": "6ul-cZyuYq4"
+            }
+        ]
+        },
+        {"_id": "6905e7b8f3351a6f272008fe",
+        "ownerEmail": "anya@biswas.com",
+        "name": "My Favorite Songs",
+        "songs": [
+            {
+            "title": "Resentment",
+            "artist": "PARTYNEXTDOOR",
+            "year": 2020,
+            "youTubeId": "xv3M1S2_hk0"
+            },
+            {
+            "title": "Dear God",
+            "artist": "Tate McRae",
+            "year": 2024,
+            "youTubeId": "2B8xKnKNA1E"
+            },
+            {
+            "title": "Foreign",
+            "artist": "Playboi Carti",
+            "year": 2017,
+            "youTubeId": "a2Pp3WyiW5M"
+            },
+            {
+            "title": "Yale",
+            "artist": "Ken Carson",
+            "year": 2022,
+            "youTubeId": "AjEok2mNoJY"
+            },
+            {
+            "title": "Jungle",
+            "artist": "Drake",
+            "year": 2015,
+            "youTubeId": "oXTFlouYq1g"
+            },
+            {
+            "title": "Next To You",
+            "artist": "Bryson Tiller",
+            "year": 2020,
+            "youTubeId": "kXyowOngtYw"
+            },
+            {
+            "title": "Color Way",
+            "artist": "Destin Conrad",
+            "year": 2021,
+            "youTubeId": "TjbxW0dDdFg"
+            },
+            {
+            "title": "After Hours",
+            "artist": "The Weeknd",
+            "year": 2020,
+            "youTubeId": "rVvn9T6bqlI"
+            },
+            {
+            "title": "Kryptonite",
+            "artist": "Don Toliver",
+            "year": 2023,
+            "youTubeId": "cai8F0QngdY"
+            },
+            {
+            "title": "White Ferrari",
+            "artist": "Frank Ocean",
+            "year": 2016,
+            "youTubeId": "COO1lk2tY9Q"
+            },
+            {
+            "title": "My Eyes",
+            "artist": "Travis Scott",
+            "year": 2023,
+            "youTubeId": "o0gxO2Zg4Ns"
+            },
+            {
+            "title": "Ghost",
+            "artist": "Justin Bieber",
+            "year": 2021,
+            "youTubeId": "x1X1JQ7GmUQ"
+            },
+            {
+            "title": "Agora Hills",
+            "artist": "Doja Cat",
+            "year": 2023,
+            "youTubeId": "A7x9vMNaSWI"
+            },
+            {
+            "title": "Under The Influence",
+            "artist": "Chris Brown",
+            "year": 2019,
+            "youTubeId": "fX7E2z4dqY0"
+            },
+            {
+            "title": "Poison",
+            "artist": "Brent Faiyaz",
+            "year": 2022,
+            "youTubeId": "epSm8R44AQA"
+            },
+            {
+            "title": "Somebody",
+            "artist": "Latto",
+            "year": 2023,
+            "youTubeId": "n09g3Drxy5U"
+            },
+            {
+            "title": "Good Days",
+            "artist": "SZA",
+            "year": 2020,
+            "youTubeId": "E-SYV0Y2u8Q"
+            },
+            {
+            "title": "LES",
+            "artist": "Childish Gambino",
+            "year": 2011,
+            "youTubeId": "i3bHE9D3Y98"
+            },
+            {
+            "title": "Ivy",
+            "artist": "Frank Ocean",
+            "year": 2016,
+            "youTubeId": "jRva8zM9b2k"
+            },
+            {
+            "title": "Die For You",
+            "artist": "The Weeknd",
+            "year": 2016,
+            "youTubeId": "Wl9G0T5nY6E"
+            }
+        ]
+        },
+        {"_id": "69083d40cfc0dd8016cf7ac1",
+        "ownerEmail": "anya@biswas.com",
+            "name": "Songs I Find Interesting",
+            "songs": [
+            {
+                "title": "Venus Fly Trap",
+                "artist": "Fousheé",
+                "year": 2022,
+                "youTubeId": "qYRuOZB4gSk"
+            },
+            {
+                "title": "A World Alone",
+                "artist": "Lorde",
+                "year": 2021,
+                "youTubeId": "KqReDml6W9U"
+            },
+            {
+                "title": "Plastic Off the Sofa",
+                "artist": "Beyoncé",
+                "year": 2022,
+                "youTubeId": "vY9fWnIGCOE"
+            },
+            {
+                "title": "Fractured",
+                "artist": "RIMON",
+                "year": 2023,
+                "youTubeId": "vP_RZJoHnA0"
+            },
+            {
+                "title": "Eyes Don't Lie",
+                "artist": "Tones and I",
+                "year": 2022,
+                "youTubeId": "hyZJb3W3Ccw"
+            },
+            {
+                "title": "Starfruit",
+                "artist": "Moonchild ft. Lalah Hathaway",
+                "year": 2022,
+                "youTubeId": "2x9mOqYfTGs"
+            },
+            {
+                "title": "Pink Pony Club",
+                "artist": "Chappell Roan",
+                "year": 2023,
+                "youTubeId": "UqqUJxqN2qg"
+            },
+            {
+                "title": "Mango",
+                "artist": "Peach Tree Rascals",
+                "year": 2021,
+                "youTubeId": "rf4t9H7UpbE"
+            },
+            {
+                "title": "Earth Sign",
+                "artist": "Lizzy McAlpine",
+                "year": 2023,
+                "youTubeId": "QKIVt1KzsvA"
+            },
+            {
+                "title": "Call It Love",
+                "artist": "Felix Jaehn & Ray Dalton",
+                "year": 2023,
+                "youTubeId": "ohGu1yVJzCk"
+            },
+            {
+                "title": "Dogtooth",
+                "artist": "Tyler, The Creator",
+                "year": 2023,
+                "youTubeId": "y3aW_GzLxjY"
+            },
+            {
+                "title": "Crying in the Club Bathroom",
+                "artist": "Noah Guy",
+                "year": 2023,
+                "youTubeId": "4YpR8aD_pjs"
+            },
+            {
+                "title": "Psycho Freak",
+                "artist": "Camila Cabello ft. WILLOW",
+                "year": 2022,
+                "youTubeId": "h2ObHXnTPZo"
+            },
+            {
+                "title": "Bubble Gum",
+                "artist": "Clairo",
+                "year": 2023,
+                "youTubeId": "iVr0rIRkbGo"
+            },
+            {
+                "title": "Cinnamon Girl",
+                "artist": "Lana Del Rey",
+                "year": 2019,
+                "youTubeId": "fRHkTJbWhGQ"
+            },
+            {
+                "title": "Fearmonger",
+                "artist": "Samm Henshaw",
+                "year": 2022,
+                "youTubeId": "qC4R7xDR0qM"
+            },
+            {
+                "title": "F2F",
+                "artist": "SZA",
+                "year": 2023,
+                "youTubeId": "Pi1JQyNH6f8"
+            },
+            {
+                "title": "Cracker Island",
+                "artist": "Gorillaz ft. Thundercat",
+                "year": 2023,
+                "youTubeId": "57ik7x0v6ec"
+            },
+            {
+                "title": "Alien Superstar",
+                "artist": "Beyoncé",
+                "year": 2022,
+                "youTubeId": "yz_n3YrYkkQ"
+            },
+            {
+                "title": "The Recipe",
+                "artist": "SiR",
+                "year": 2023,
+                "youTubeId": "YHsj3sG5sVk"
+            }
+            ]
+        }
+        
+    ]
+    
+}
