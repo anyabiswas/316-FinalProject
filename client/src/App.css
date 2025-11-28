@@ -6,73 +6,138 @@
     
         @author McKilla Gorilla
     */
-  --swatch-foundation: #eeeedd;
-  --swatch-primary: #e6e6e6;
-  --swatch-complement: #e1e4cb;
-  --swatch-contrast: #999999;
-  --swatch-accent: #669966;
-  --swatch-status: #123456;
-  --my-font-family: "Robaaaoto";
+    --swatch-foundation: #ffe6ff;
+
+    --swatch-primary: #fffce6;
+  
+    --swatch-complement: #f7f2d7;
+  
+    --swatch-contrast: #444444;
+  
+    /* Accent colors used elsewhere */
+    --swatch-accent: #669966;
+    --swatch-status: #444444;
+    --my-font-family: "Lexend Exa", sans-serif;
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  --banner-color: #ff00e6;
 }
 
 body {
-  background-image: url('https://thumbs.dreamstime.com/b/music-notes-symbols-seamless-pattern-design-fully-editable-fill-background-color-music-notes-symbols-seamless-pattern-118273669.jpg')
+  background-color: var(--swatch-foundation);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--my-font-family);
 }
 
 #root {
   background-color: var(--swatch-primary);
-  font-family: "Lexend Exa";
-  position: absolute;
-  width: 80%;
-  left: 10%;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 70%;
   height: 90%;
-  top: 5%;
+  margin: auto; 
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 #app-root {
-  position: absolute;
   width: 100%;
   height: 100%;
-  top: 0%;
-  left: 0%;
+  display: flex;
+  flex-direction: column;
 }
 
-#playlister-banner {
-  position: absolute;
-  left: 0%;
-  top: 0%;
+/*#playlister-banner {
   width: 100%;
-  height: 10%;
-  float: left;
-  background-image: linear-gradient(to bottom, #b8b808, #636723);
+  height: 60px;
+  background-color: var(--banner-color);
   color: white;
-  font-size: 48pt;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 20pt;
+  border-bottom: 2px solid black;
+}*/
+.welcome-content {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+
+  /* Center vertically inside the remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* This makes the layout match the PDF mockup */
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
-#splash-screen {
-  background-image: url("https://www.gifcen.com/wp-content/uploads/2022/03/rickroll-gif-7.gif");
-  background-size: cover;
-  color: rgb(0, 0, 0);
-  font-size: 10vw;
-  border-color: black;
-  border-width: 5px;
-  border-style: solid;
-  border-radius: 2px;
-  padding-top: 1%;
-  padding-bottom: 14%;
-  height:70%;
+
+#welcome-screen{
+  flex: 1;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;     /* centers wrapper vertically */
+  align-items: center;         /* centers wrapper horizontally */
+
   text-align: center;
-  vertical-align: center;
+
 }
+
+#welcome-title {
+  font-size: 42pt;
+  font-weight: 700; 
+  color: #444444;
+  margin-bottom: 30px;
+}
+
+#welcome-logo {
+  width: 360px;
+  height: auto;
+  margin-bottom: 40px;
+}
+
+#welcome-buttons {
+  display: flex;
+  gap: 40px;
+  margin-top: 10px;
+}
+
+.welcome-btn {
+  background-color: #444444;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 14pt;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: 200px; 
+  height: 60px; 
+}
+
+.welcome-btn:hover {
+  background-color: #222222;
+}
+
 
 #edit-toolbar {
   background-color: transparent;
   transform: translate(41%, 0%);
 }
+
 
 .playlister-button,
 .playlister-button-disabled {
