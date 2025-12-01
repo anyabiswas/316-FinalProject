@@ -24,7 +24,7 @@ export default function WelcomeScreen() {
                         Login
                     </button>
                     <button className="welcome-btn" onClick={() => history.push('/register')}>
-                        Create Account TEST
+                        Create Account 
                     </button>
                 </div>
 

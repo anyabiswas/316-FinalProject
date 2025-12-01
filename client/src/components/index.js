@@ -13,6 +13,9 @@ import SongCard from './SongCard'
 import WelcomeScreen from './WelcomeScreen'
 import Statusbar from './Statusbar'
 import WorkspaceScreen from './WorkspaceScreen'
+import SongsCatalogScreen from './SongsCatalogScreen'
+import EditAccountScreen from './EditAccountScreen'
+
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -34,4 +37,6 @@ export {
     RegisterScreen,
     WelcomeScreen,
     Statusbar, 
-    WorkspaceScreen }
+    WorkspaceScreen,
+    SongsCatalogScreen,
+    EditAccountScreen }
