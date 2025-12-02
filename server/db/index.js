@@ -1,19 +1,22 @@
-const dotenv = require('dotenv');
-dotenv.config({ path: __dirname + '/../../.env' });
+const mongoose = require('mongoose');
 
-const DatabaseManager = require('./DatabaseManager');
+const MONGO_URL = "mongodb://127.0.0.1:27017/playlister";
 
-let db;
+mongoose
+    .connect(MONGO_URL, {
+        useNewUrlParser: true,
+    })
+    .catch(err => {
+        console.error("MongoDB Connection Error:", err);
+    });
 
-if (process.env.DB_TYPE === 'mongodb') {
-    const MongoDatabaseManager = require('./mongodb');
-    db = new MongoDatabaseManager(); 
-} else if (process.env.DB_TYPE === 'postgresql') {
-    const PostgresDatabaseManager = require('./postgresql');
-    db = new PostgresDatabaseManager();
-} else {
-    console.error('No DB_TYPE specified in .env');
-    process.exit(1);
-}
+const db = mongoose.connection;
+
+db.once("open", () => {
+    console.log("Connected to MongoDB");
+});
 
 module.exports = db;
+
+
+

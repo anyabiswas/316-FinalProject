@@ -27,18 +27,12 @@ app.use('/store', storeRouter)
 // INITIALIZE OUR DATABASE OBJECT
 const db = require('./db'); 
 
-(async () => {
-    try {
-        await db.connect(); 
-        console.log('Database connected successfully');
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-        
-        app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        });
+db.once("open", () => {
+    console.log("Connected to MongoDB");
 
-    } catch (err) {
-        console.error('Database connection error:', err);
-        process.exit(1); 
-    }
-})();
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+});
