@@ -60,20 +60,25 @@ export const logoutUser = async () => {
 };
 
 // Register new user
-export const registerUser = async (firstName, lastName, email, password, passwordVerify) => {
+export const registerUser = async (userName, email, password, passwordVerify, avatar) => {
     const response = await fetch(`${BASE_URL}/register/`, {
-        ...defaultOptions,
-        method: 'POST',
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-            firstName,
-            lastName,
+            userName,
             email,
             password,
-            passwordVerify
+            passwordVerify,
+            avatar
         })
     });
     return handleResponse(response);
 };
+
+
 
 // Export grouped API
 const apis = {

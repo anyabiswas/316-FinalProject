@@ -25,9 +25,9 @@ getLoggedIn = async (req, res) => {
         return res.status(200).json({
             loggedIn: true,
             user: {
-                firstName: loggedInUser.firstName,
-                lastName: loggedInUser.lastName,
-                email: loggedInUser.email
+                userName: loggedInUser.userName,
+                email: loggedInUser.email,
+                avatar: loggedInUser.avatar
             }
         })
     } catch (err) {
@@ -78,9 +78,9 @@ loginUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
-                firstName: existingUser.firstName,
-                lastName: existingUser.lastName,  
-                email: existingUser.email              
+                userName: existingUser.userName,
+                email: existingUser.email,
+                avatar: existingUser.avatar             
             }
         })
 
@@ -102,9 +102,10 @@ logoutUser = async (req, res) => {
 registerUser = async (req, res) => {
     console.log("REGISTERING USER IN BACKEND");
     try {
-        const { firstName, lastName, email, password, passwordVerify } = req.body;
-        console.log("create user: " + firstName + " " + lastName + " " + email + " " + password + " " + passwordVerify);
-        if (!firstName || !lastName || !email || !password || !passwordVerify) {
+        const { userName, email, password, passwordVerify, avatar } = req.body;
+        console.log("create user:", userName, email, password, passwordVerify, avatar);
+
+        if (!userName || !email || !password || !passwordVerify || !avatar)  {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
@@ -142,10 +143,10 @@ registerUser = async (req, res) => {
         console.log("passwordHash: " + passwordHash);
 
         const newUser = await db.createUser({
-            firstName,
-            lastName,
+            userName,
             email,
-            passwordHash
+            passwordHash, 
+            avatar
         });
 
         // LOGIN THE USER
@@ -159,9 +160,9 @@ registerUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,  
-                email: newUser.email              
+                userName: newUser.userName,
+                email: newUser.email,
+                avatar: newUser.avatar              
             }
         })
         

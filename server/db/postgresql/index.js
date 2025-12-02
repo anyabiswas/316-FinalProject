@@ -9,11 +9,12 @@ const sequelize = new Sequelize(process.env.PG_URI, {
 
 
 const User = sequelize.define('User', {
-    firstName: { type: DataTypes.STRING },
-    lastName: { type: DataTypes.STRING },
+    userName: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    passwordHash: { type: DataTypes.STRING, allowNull: false }
-  }, { timestamps: true });
+    passwordHash: { type: DataTypes.STRING, allowNull: false },
+    avatar: { type: DataTypes.STRING, allowNull: true }
+}, { timestamps: true });
+
   
 const Playlist = sequelize.define('Playlist', {
     name: { type: DataTypes.STRING, allowNull: false },
