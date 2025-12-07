@@ -83,6 +83,19 @@ function AuthContextProvider(props) {
         try {
             const response = await authRequestSender.registerUser(userName, email, password, passwordVerify, avatar);
     
+            if (response?.data?.success === false) {
+                authReducer({
+                    type: AuthActionType.REGISTER_USER,
+                    payload: {
+                        ...auth,
+                        loggedIn: false,
+                        errorMessage: response.data.errorMessage
+                    }
+                });
+                return;
+            }
+
+
             if (response?.data?.user) {   
                 console.log("Registered Successfully");
                 authReducer({
@@ -94,9 +107,7 @@ function AuthContextProvider(props) {
                     }
                 });
                 history.push("/login");
-                console.log("NOW WE LOGIN");
-                await auth.loginUser(email, password);
-                console.log("LOGGED IN");
+                
             }
         } catch (error) {
             const message = error?.errorMessage || error?.message || "Registration failed.";
@@ -112,6 +123,8 @@ function AuthContextProvider(props) {
     };
     
     auth.loginUser = async function (email, password) {
+    console.log("LOGIN FRONTEND sending email:", email);
+    console.log("LOGIN FRONTEND sending password:", password);
         try {
             const response = await authRequestSender.loginUser(email, password);
     

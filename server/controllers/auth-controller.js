@@ -38,8 +38,11 @@ getLoggedIn = async (req, res) => {
 
 loginUser = async (req, res) => {
     console.log("loginUser");
+    console.log("loginUser BODY:", req.body);
     try {
         const { email, password } = req.body;
+        console.log("Email received:", email);
+        console.log("Password received:", password);
 
         if (!email || !password) {
             return res
@@ -48,6 +51,7 @@ loginUser = async (req, res) => {
         }
 
         const existingUser = await db.findUserByEmail(email);
+        console.log("found user",existingUser);
         if (!existingUser) {
             return res
                 .status(401)
@@ -101,6 +105,10 @@ logoutUser = async (req, res) => {
 
 registerUser = async (req, res) => {
     console.log("REGISTERING USER IN BACKEND");
+
+    console.log("req.body:", req.body);
+    console.log("req.files:", req.files);
+    
     try {
         const { userName, email, password, passwordVerify, avatar } = req.body;
         console.log("create user:", userName, email, password, passwordVerify, avatar);
@@ -128,6 +136,7 @@ registerUser = async (req, res) => {
         }
         console.log("password and password verify match");
 
+        console.log("About to run findUserByEmail()");
         const existingUser = await db.findUserByEmail(email);
         if (existingUser) {
             return res
@@ -136,6 +145,7 @@ registerUser = async (req, res) => {
                     errorMessage: "An account with this email already exists." 
                 });
         }
+        console.log("indUserByEmail DONE:", existingUser);
 
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
