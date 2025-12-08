@@ -1,118 +1,97 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
+import AuthContext from '../auth'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
+import Avatar from '@mui/material/Avatar'
 
-/*
-    This is a card in our list of top 5 lists. It lets select
-    a list for editing and it has controls for changing its 
-    name or deleting it.
-    
-    @author McKilla Gorilla
-*/
 function PlaylistCard(props) {
-    const { store } = useContext(GlobalStoreContext);
-    const [editActive, setEditActive] = useState(false);
-    const [text, setText] = useState("");
-    const { idNamePair } = props;
+    const { store } = useContext(GlobalStoreContext)
+    const { auth } = useContext(AuthContext)
+    const { idNamePair } = props
 
-    function handleLoadList(event, id) {
-        console.log("handleLoadList for " + id);
-        if (!event.target.disabled) {
-            let _id = event.target.id;
-            if (_id.indexOf('list-card-text-') >= 0)
-                _id = ("" + _id).substring("list-card-text-".length);
-
-            console.log("load " + event.target.id);
-
-            // CHANGE THE CURRENT LIST
-            store.setCurrentList(id);
-        }
+    const handleEdit = async (e) => {
+        e.stopPropagation()
+        await store.setCurrentList(idNamePair._id)
+        store.showEditPlaylistModal()
     }
 
-    function handleToggleEdit(event) {
-        event.stopPropagation();
-        toggleEdit();
+    const handleDelete = (e) => {
+        e.stopPropagation()
+        store.markListForDeletion(idNamePair._id)
     }
 
-    function toggleEdit() {
-        let newActive = !editActive;
-        if (newActive) {
-            store.setIsListNameEditActive();
-        }
-        setEditActive(newActive);
+    const handleCopy = async (e) => {
+        e.stopPropagation()
+        store.copyPlaylist(idNamePair._id)
     }
 
-    async function handleDeleteList(event, id) {
-        event.stopPropagation();
-        //let _id = event.target.id;
-        //_id = ("" + _id).substring("delete-list-".length);
-        store.markListForDeletion(id);
+    const handlePlay = (e) => {
+        e.stopPropagation()
+        store.setCurrentList(idNamePair._id)
     }
 
-    function handleKeyPress(event) {
-        if (event.code === "Enter") {
-            let id = event.target.id.substring("list-".length);
-            store.changeListName(id, text);
-            toggleEdit();
-        }
-    }
-    function handleUpdateText(event) {
-        setText(event.target.value);
-    }
-
-    let cardElement =
-        <ListItem
-            id={idNamePair._id}
-            key={idNamePair._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', /*p: 1*/ }}
-            style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }}
-            button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
+    return (
+        <Box 
+            sx={{
+                width: '95%',
+                margin: '10px auto',
+                padding: '12px',
+                borderRadius: '12px',
+                bgcolor: '#ffffff',
+                boxShadow: '0px 3px 6px rgba(0,0,0,0.12)',
+                display: 'flex',
+                flexDirection: 'column'
             }}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
+            <Box sx={{ display:'flex', alignItems:'center', gap:1 }}>
+                <Avatar src={auth.user?.avatar} />
+                <Box sx={{ display:'flex', flexDirection:'column' }}>
+                    <Box sx={{ fontWeight:'bold' }}>{idNamePair.name}</Box>
+                    <Box sx={{ fontSize:'12px', opacity:0.7 }}>{auth.user?.userName}</Box>
+                </Box>
             </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
-        </ListItem>
 
-    if (editActive) {
-        cardElement =
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id={"list-" + idNamePair._id}
-                label="Playlist Name"
-                name="name"
-                autoComplete="Playlist Name"
-                className='list-card'
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
-                autoFocus
-            />
-    }
-    return (
-        cardElement
-    );
+            <Box sx={{ display:'flex', gap:1, marginTop:'8px' }}>
+                <Button 
+                    variant="contained" 
+                    sx={{ bgcolor:'#d9534f', '&:hover':{bgcolor:'#c9302c'} }} 
+                    onClick={handleDelete}
+                >
+                    Delete
+                </Button>
+
+                <Button 
+                    variant="contained" 
+                    sx={{ bgcolor:'#0275d8', '&:hover':{bgcolor:'#025aa5'} }} 
+                    onClick={handleEdit}
+                >
+                    Edit
+                </Button>
+
+                <Button 
+                    variant="contained" 
+                    sx={{ bgcolor:'#5cb85c', '&:hover':{bgcolor:'#449d44'} }} 
+                    onClick={handleCopy}
+                >
+                    Copy
+                </Button>
+
+                <Button 
+                    variant="contained" 
+                    sx={{ bgcolor:'#f0ad4e', '&:hover':{bgcolor:'#ec971f'} }} 
+                    onClick={handlePlay}
+                >
+                    Play
+                </Button>
+            </Box>
+
+            <Box sx={{ marginTop:'5px', fontSize:'12px', opacity:0.6 }}>
+                {idNamePair.listeners || 0} Listeners
+            </Box>
+        </Box>
+    )
 }
 
-export default PlaylistCard;
+export default PlaylistCard

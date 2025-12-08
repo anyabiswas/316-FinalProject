@@ -144,25 +144,37 @@ export default function PlaylistsScreen() {
                         <span>{store.idNamePairs.length} Playlists</span>
                     </div>
     
-                    <List
-                        sx={{
-                            width: "100%",
-                            bgcolor: "background.paper",
-                            borderRadius: "12px",
-                            padding: "5px"
+                    
+                    <div
+                        style={{
+                            height: "60vh",          
+                            overflowY: "auto",      
+                            overflowX: "hidden",    
+                            paddingRight: "6px",
+                            marginBottom: "20px"
                         }}
                     >
-                        {store.idNamePairs.map((pair) => (
-                            <PlaylistCard
-                                key={pair._id}
-                                idNamePair={pair}
-                                selected={false}
-                            />
-                        ))}
-                    </List>
-    
-                
-                    <div style={{ marginTop: "30px", textAlign: "left" }}>
+                        <List
+                            sx={{
+                                width: "100%",
+                                bgcolor: "background.paper",
+                                borderRadius: "12px",
+                                padding: "5px",
+                                boxSizing: "border-box"
+                            }}
+                        >
+                            {store.idNamePairs.map((pair) => (
+                                <PlaylistCard
+                                    key={pair._id}
+                                    idNamePair={pair}
+                                    selected={false}
+                                />
+                            ))}
+                        </List>
+                    </div>
+
+
+                    <div style={{ marginTop: "20px", textAlign: "left" }}>
                         <Fab
                             variant="extended"
                             sx={{
@@ -180,13 +192,13 @@ export default function PlaylistsScreen() {
                             New Playlist
                         </Fab>
                     </div>
-    
+                        
                     <MUIDeleteModal />
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 
 

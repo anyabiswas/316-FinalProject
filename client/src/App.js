@@ -31,7 +31,6 @@ const App = () => {
                     <MUIEditPlaylistModal />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />
-
                         <Route path="/welcome" exact component={WelcomeScreen} />
                         <Route path="/playlists" exact component={HomeScreen} />
                         <Route path="/songs" exact component={SongsCatalogScreen} />
@@ -40,7 +39,6 @@ const App = () => {
                         <Route path="/editaccount" exact component={EditAccountScreen} />
                         <Route path="/playlist/:id" exact component={WorkspaceScreen} />
                     </Switch>
-                    <Statusbar />
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
         </BrowserRouter>

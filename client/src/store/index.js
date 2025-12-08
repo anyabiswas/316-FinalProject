@@ -452,8 +452,6 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.EDIT_PLAYLIST,
             payload: playlist
         });
-
-        store.showEditPlaylistModal();
     };
 
     store.isEditPlaylistModalOpen = () => {
