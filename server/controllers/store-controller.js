@@ -2,6 +2,7 @@
 //const User = require('../models/user-model'); 
 const db = require('../db');
 const auth = require('../auth')
+const Song = require("../models/song-model");
 /*
     This is our back-end API. It provides all the data services
     our database needs. Note that this file contains the controller
@@ -181,11 +182,24 @@ updatePlaylist = async (req, res) => {
 }
 
 
+getAllSongs = async (req, res) => {
+    try {
+        const songs = await Song.find({});
+        return res.status(200).json(songs); 
+    } catch (err) {
+        console.log(err);
+        return res.status(400).json({ errorMessage: "Failed to load songs" });
+    }
+};
+
+
+
 module.exports = {
     createPlaylist,
     deletePlaylist,
     getPlaylistById,
     getPlaylistPairs,
     getPlaylists,
-    updatePlaylist
+    updatePlaylist,
+    getAllSongs  
 }

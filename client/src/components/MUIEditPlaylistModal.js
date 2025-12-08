@@ -1,152 +1,196 @@
-import { useContext, useState, useEffect } from 'react'
-import { GlobalStoreContext } from '../store'
-import Modal from '@mui/material/Modal'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import Button from '@mui/material/Button'
-import CloseIcon from '@mui/icons-material/Close'
-import AddIcon from '@mui/icons-material/Add'
-import UndoIcon from '@mui/icons-material/Undo'
-import RedoIcon from '@mui/icons-material/Redo'
+import { useContext, useState, useEffect } from "react";
+import { GlobalStoreContext } from "../store";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+
+import ClearIcon from "@mui/icons-material/Clear";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function MUIEditPlaylistModal() {
-    const { store } = useContext(GlobalStoreContext)
+    const { store } = useContext(GlobalStoreContext);
+    const list = store.currentList;
+
     const [name, setName] = useState("");
 
     useEffect(() => {
-        if (store.editPlaylistModalOpen && store.currentList) {
-            setName(store.currentList.name);
+        if (store.isEditPlaylistModalOpen() && list) {
+            setName(list.name);
         }
-    }, [store.editPlaylistModalOpen, store.currentList]);
+    }, [store.editPlaylistModalOpen]);
 
+    if (!store.isEditPlaylistModalOpen() || !list) return null;
 
-
-    function handleUpdate() {
-        store.changeListName(store.currentList._id, name)
-        store.hideModals()
-    }
-
-    function handleClose() {
-        store.hideModals()
-    }
+    const handleClose = () => store.hideModals();
+    const handleClearName = () => setName("");
 
     return (
-        <Modal open={store.editPlaylistModalOpen}>
-            <Box sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 700,
-                bgcolor: '#c3f7c2',
-                borderRadius: '12px',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
+        <Modal open={true}>
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "900px",
+                    bgcolor: "#f6f2d6",
+                    borderRadius: "8px",
+                    border: "4px solid #d9d5c5",
+                    overflow: "hidden"
+                }}
+            >
                 
-                <Box sx={{
-                    backgroundColor: '#00b31e',
-                    padding: '10px 20px',
-                    fontSize: '22px',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    borderTopLeftRadius: '12px',
-                    borderTopRightRadius: '12px'
-                }}>
+                <Box
+                    sx={{
+                        bgcolor: "#32cd32",
+                        padding: "12px 20px",
+                        fontSize: "22px",
+                        fontWeight: "bold",
+                        color: "white"
+                    }}
+                >
                     Edit Playlist
                 </Box>
 
-                <Box sx={{ padding: '20px' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <TextField
-                            fullWidth
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                            sx={{
-                                backgroundColor: '#f3f3f3',
-                                borderRadius: '8px'
-                            }}
-                        />
-                        <IconButton onClick={handleClose}>
-                            <CloseIcon />
-                        </IconButton>
-
-                        <Button sx={{
-                            backgroundColor: '#8650f7',
-                            color: 'white',
-                            textTransform: 'none',
-                            borderRadius: '10px',
-                            padding: '6px 18px',
-                            fontWeight: 'bold',
-                            '&:hover': { backgroundColor: '#6b35d3' }
-                        }}>
-                            <AddIcon />
-                        </Button>
-                    </Box>
-
-                    <Box sx={{
-                        marginTop: '20px',
-                        backgroundColor: 'white',
-                        borderRadius: '12px',
-                        minHeight: '260px',
-                        padding: '10px',
-                        border: '2px solid #b5e8b3'
-                    }}>
-                    </Box>
-
-                    <Box sx={{
-                        marginTop: '20px',
-                        display: 'flex',
-                        justifyContent: 'flex-start',
+               
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "15px 20px",
+                        bgcolor: "#dcdcdc",
+                        borderBottom: "2px solid #d9d5c5",
                         gap: 2
-                    }}>
+                    }}
+                >
+                    <TextField
+                        fullWidth
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        variant="outlined"
+                        sx={{
+                            bgcolor: "white",
+                            borderRadius: "6px"
+                        }}
+                    />
+
+                    <IconButton onClick={handleClearName}>
+                        <ClearIcon />
+                    </IconButton>
+
+                    <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        sx={{
+                            textTransform: "none",
+                            bgcolor: "#6a55d8",
+                            "&:hover": { bgcolor: "#5948c0" }
+                        }}
+                        onClick={() => {
+                            store.hideModals();
+                            window.location.href = "/songs";
+                        }}
+                    >
+                        Song
+                    </Button>
+                </Box>
+
+               
+                <Box
+                    sx={{
+                        padding: "20px",
+                        height: "360px",
+                        overflowY: "auto",
+                        borderBottom: "2px solid #d9d5c5",
+                        bgcolor: "#ffffff"
+                    }}
+                >
+                    {list.songs.map((song, index) => (
+                        <Box
+                            key={index}
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "12px",
+                                marginBottom: "12px",
+                                borderRadius: "8px",
+                                backgroundColor: "#fbf2a0",
+                                border: "2px solid #d9c77e"
+                            }}
+                        >
+                            <span style={{ fontSize: "17px", fontWeight: 500 }}>
+                                {index + 1}. {song.title} by {song.artist} ({song.year})
+                            </span>
+
+                            <Box sx={{ display: "flex", gap: 1 }}>
+                                <IconButton onClick={() => store.showEditSongModal(index, song)}>
+                                    <EditIcon />
+                                </IconButton>
+
+                                <IconButton onClick={() => store.copySong(index)}>
+                                    <ContentCopyIcon />
+                                </IconButton>
+
+                                <IconButton onClick={() => store.markSongForDeletion(index)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    ))}
+                </Box>
+
+                
+                <Box
+                    sx={{
+                        bgcolor: "#c9f7c1",
+                        padding: "15px 25px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}
+                >
+                    <Box sx={{ display: "flex", gap: 2 }}>
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: '#6c48ff',
-                                color: 'white',
-                                textTransform: 'none',
-                                borderRadius: '20px'
+                                bgcolor: "#6a55d8",
+                                "&:hover": { bgcolor: "#5948c0" }
                             }}
+                            onClick={store.undo}
                         >
-                            <UndoIcon />
                             Undo
                         </Button>
 
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: '#6c48ff',
-                                color: 'white',
-                                textTransform: 'none',
-                                borderRadius: '20px'
+                                bgcolor: "#6a55d8",
+                                "&:hover": { bgcolor: "#5948c0" }
                             }}
+                            onClick={store.redo}
                         >
-                            <RedoIcon />
                             Redo
                         </Button>
                     </Box>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                        <Button
-                            variant="contained"
-                            onClick={handleUpdate}
-                            sx={{
-                                backgroundColor: '#00b96b',
-                                color: 'white',
-                                width: '120px',
-                                fontWeight: 'bold',
-                                borderRadius: '20px',
-                                textTransform: 'none'
-                            }}
-                        >
-                            Close
-                        </Button>
-                    </Box>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor: "#1e7a32",
+                            "&:hover": { bgcolor: "#176028" }
+                        }}
+                        onClick={handleClose}
+                    >
+                        Close
+                    </Button>
                 </Box>
             </Box>
         </Modal>
-    )
+    );
 }

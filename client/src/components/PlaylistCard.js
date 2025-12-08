@@ -80,7 +80,7 @@ function PlaylistCard(props) {
 
                 <Button 
                     variant="contained" 
-                    sx={{ bgcolor:'#f0ad4e', '&:hover':{bgcolor:'#ec971f'} }} 
+                    sx={{ bgcolor:'#d663d4', '&:hover':{bgcolor:'#a832a6'} }} 
                     onClick={handlePlay}
                 >
                     Play
