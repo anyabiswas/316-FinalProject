@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function MUIEditPlaylistModal() {
     const { store } = useContext(GlobalStoreContext);
-    const list = store.currentList;
+    const list = store.currentPlaylist;
 
     const [name, setName] = useState("");
 
@@ -22,15 +22,22 @@ export default function MUIEditPlaylistModal() {
         if (store.isEditPlaylistModalOpen() && list) {
             setName(list.name);
         }
-    }, [store.editPlaylistModalOpen]);
+    }, [store.currentPlaylist, store.editPlaylistModalOpen]);
 
     if (!store.isEditPlaylistModalOpen() || !list) return null;
 
     const handleClose = () => store.hideModals();
     const handleClearName = () => setName("");
 
+    const handleNameSubmit = () => {
+        store.renameCurrentPlaylist(name);
+    };
+
+    if (!store.isEditPlaylistModalOpen() || !list) return null;
+
     return (
-        <Modal open={true}>
+        <Modal open={store.isEditPlaylistModalOpen()}>
+
             <Box
                 sx={{
                     position: "absolute",
@@ -44,7 +51,6 @@ export default function MUIEditPlaylistModal() {
                     overflow: "hidden"
                 }}
             >
-                
                 <Box
                     sx={{
                         bgcolor: "#32cd32",
@@ -57,7 +63,6 @@ export default function MUIEditPlaylistModal() {
                     Edit Playlist
                 </Box>
 
-               
                 <Box
                     sx={{
                         display: "flex",
@@ -71,13 +76,17 @@ export default function MUIEditPlaylistModal() {
                     <TextField
                         fullWidth
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            store.renameCurrentPlaylist(e.target.value);
+                        }}
                         variant="outlined"
                         sx={{
                             bgcolor: "white",
                             borderRadius: "6px"
                         }}
                     />
+
 
                     <IconButton onClick={handleClearName}>
                         <ClearIcon />
@@ -100,7 +109,6 @@ export default function MUIEditPlaylistModal() {
                     </Button>
                 </Box>
 
-               
                 <Box
                     sx={{
                         padding: "20px",
@@ -133,11 +141,16 @@ export default function MUIEditPlaylistModal() {
                                     <EditIcon />
                                 </IconButton>
 
-                                <IconButton onClick={() => store.copySong(index)}>
+                                <IconButton onClick={() => {
+                                    const copy = store.copySongInPlaylist(song);
+                                    store.currentPlaylist.songs.splice(index + 1, 0, copy);
+                                }}>
                                     <ContentCopyIcon />
                                 </IconButton>
 
-                                <IconButton onClick={() => store.markSongForDeletion(index)}>
+                                <IconButton onClick={() => {
+                                    store.removeSongFromPlaylist(index);
+                                }}>
                                     <DeleteIcon />
                                 </IconButton>
                             </Box>
@@ -145,7 +158,6 @@ export default function MUIEditPlaylistModal() {
                     ))}
                 </Box>
 
-                
                 <Box
                     sx={{
                         bgcolor: "#c9f7c1",
@@ -185,10 +197,11 @@ export default function MUIEditPlaylistModal() {
                             bgcolor: "#1e7a32",
                             "&:hover": { bgcolor: "#176028" }
                         }}
-                        onClick={handleClose}
+                        onClick={store.commitPlaylistChanges}   
                     >
                         Close
                     </Button>
+
                 </Box>
             </Box>
         </Modal>

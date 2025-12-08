@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import Avatar from '@mui/material/Avatar'
 
@@ -12,25 +11,24 @@ function PlaylistCard(props) {
     const { idNamePair } = props
 
     const handleEdit = async (e) => {
-        e.stopPropagation()
-        await store.setCurrentList(idNamePair._id)
-        store.showEditPlaylistModal()
-    }
+        e.stopPropagation();
+        await store.setEditingPlaylist(idNamePair._id); 
+    };
 
     const handleDelete = (e) => {
-        e.stopPropagation()
-        store.markListForDeletion(idNamePair._id)
-    }
+        e.stopPropagation();
+        store.markListForDeletion(idNamePair._id);
+    };
 
     const handleCopy = async (e) => {
-        e.stopPropagation()
-        store.copyPlaylist(idNamePair._id)
-    }
+        e.stopPropagation();
+        store.copyPlaylist(idNamePair._id);
+    };
 
     const handlePlay = (e) => {
-        e.stopPropagation()
-        store.setCurrentList(idNamePair._id)
-    }
+        e.stopPropagation();
+        store.setCurrentList(idNamePair._id);
+    };
 
     return (
         <Box 

@@ -192,6 +192,99 @@ getAllSongs = async (req, res) => {
     }
 };
 
+copySongInPlaylist = async (req, res) => {
+    try {
+        const playlistId = req.params.id;
+        const { index } = req.body;
+
+        const playlist = await Playlist.findById(playlistId).populate("songs");
+
+        if (!playlist) {
+            return res.status(404).json({ success: false, message: "Playlist not found" });
+        }
+
+        const originalSong = playlist.songs[index];
+        if (!originalSong) {
+            return res.status(400).json({ success: false, message: "Invalid song index" });
+        }
+
+       
+        const clonedSong = await Song.create({
+            title: originalSong.title,
+            artist: originalSong.artist,
+            year: originalSong.year,
+            youTubeId: originalSong.youTubeId,
+            ownerEmail: playlist.ownerEmail 
+        });
+
+        
+        playlist.songs.splice(index + 1, 0, clonedSong._id);
+        await playlist.save();
+
+        return res.status(200).json({ success: true, playlist });
+    }
+    catch (err) {
+        return res.status(500).json({ success: false, error: err });
+    }
+};
+
+
+removeSongFromPlaylist = async (req, res) => {
+    try {
+        const playlistId = req.params.id;
+        const { index } = req.body;
+
+        const playlist = await Playlist.findById(playlistId);
+
+        if (!playlist) {
+            return res.status(404).json({ success: false, message: "Playlist not found" });
+        }
+
+        if (index < 0 || index >= playlist.songs.length) {
+            return res.status(400).json({ success: false, message: "Invalid song index" });
+        }
+
+        playlist.songs.splice(index, 1);
+        await playlist.save();
+
+        return res.status(200).json({ success: true, playlist });
+    }
+    catch (err) {
+        return res.status(500).json({ success: false, error: err });
+    }
+};
+
+
+reorderSongsInPlaylist = async (req, res) => {
+    try {
+        const playlistId = req.params.id;
+        const { oldIndex, newIndex } = req.body;
+
+        const playlist = await Playlist.findById(playlistId);
+
+        if (!playlist) {
+            return res.status(404).json({ success: false, message: "Playlist not found" });
+        }
+
+        const arr = playlist.songs;
+
+        if (
+            oldIndex < 0 || oldIndex >= arr.length ||
+            newIndex < 0 || newIndex >= arr.length
+        ) {
+            return res.status(400).json({ success: false, message: "Invalid indices" });
+        }
+
+        const [moved] = arr.splice(oldIndex, 1);
+        arr.splice(newIndex, 0, moved);
+
+        await playlist.save();
+        return res.status(200).json({ success: true, playlist });
+    }
+    catch (err) {
+        return res.status(500).json({ success: false, error: err });
+    }
+};
 
 
 module.exports = {
@@ -201,5 +294,8 @@ module.exports = {
     getPlaylistPairs,
     getPlaylists,
     updatePlaylist,
-    getAllSongs  
+    getAllSongs, 
+    copySongInPlaylist,
+    removeSongFromPlaylist,
+    reorderSongsInPlaylist,
 }
