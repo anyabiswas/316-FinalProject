@@ -78,6 +78,25 @@ export const registerUser = async (userName, email, password, passwordVerify, av
     return handleResponse(response);
 };
 
+// Update account
+export const updateAccount = async (userName, password, passwordVerify, avatar) => {
+    const response = await fetch(`${BASE_URL}/update/`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            userName,
+            password,
+            passwordVerify,
+            avatar
+        })
+    });
+    return handleResponse(response);
+};
+
+
 
 
 // Export grouped API
@@ -85,7 +104,8 @@ const apis = {
     getLoggedIn,
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    updateAccount
 };
 
 export default apis;

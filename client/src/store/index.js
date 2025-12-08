@@ -33,7 +33,9 @@ export const GlobalStoreActionType = {
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
-    HIDE_MODALS: "HIDE_MODALS"
+    HIDE_MODALS: "HIDE_MODALS",
+    EDIT_PLAYLIST: "EDIT_PLAYLIST",
+
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -43,7 +45,8 @@ const CurrentModal = {
     NONE : "NONE",
     DELETE_LIST : "DELETE_LIST",
     EDIT_SONG : "EDIT_SONG",
-    ERROR : "ERROR"
+    ERROR : "ERROR",
+    EDIT_PLAYLIST: "EDIT_PLAYLIST"
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -59,7 +62,8 @@ function GlobalStoreContextProvider(props) {
         newListCounter: 0,
         listNameActive: false,
         listIdMarkedForDeletion: null,
-        listMarkedForDeletion: null
+        listMarkedForDeletion: null,
+        editPlaylistModalOpen: false,
     });
     const history = useHistory();
 
@@ -209,9 +213,27 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    editPlaylistModalOpen: false 
                 });
             }
+
+            case GlobalStoreActionType.EDIT_PLAYLIST: {
+                return setStore({
+                    currentModal: CurrentModal.EDIT_PLAYLIST,
+                    idNamePairs: store.idNamePairs,
+                    currentList: payload, 
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    editPlaylistModalOpen: true 
+                });
+            }
+            
+
             default:
                 return store;
         }
@@ -286,27 +308,59 @@ function GlobalStoreContextProvider(props) {
         history.push("/");
     }
 
-    // THIS FUNCTION CREATES A NEW LIST
+    
     store.createNewList = async function () {
-        let newListName = "Untitled" + store.newListCounter;
-        const response = await storeRequestSender.createPlaylist(newListName, [], auth.user.email);
-        console.log("createNewList response: " + response);
+
+        if (!auth.user || auth.user.isGuest) {
+            console.log("Guests cannot create playlists");
+            return;
+        }        
+       
+        const pairsResponse = await storeRequestSender.getPlaylistPairs();
+        if (!pairsResponse.data.success) {
+            console.log("Failed to load playlists for name check");
+            return;
+        }
+    
+        const ownedPairs = pairsResponse.data.idNamePairs.filter(
+            pair => pair.ownerEmail === auth.user.email
+        );
+    
+        const existingNames = new Set(ownedPairs.map(p => p.name));
+    
+        let counter = store.newListCounter;
+        let newListName = "Untitled" + counter;
+    
+        while (existingNames.has(newListName)) {
+            counter++;
+            newListName = "Untitled" + counter;
+        }
+    
+        const response = await storeRequestSender.createPlaylist(
+            newListName,
+            [],
+            auth.user.email
+        );
+    
         if (response.status === 201) {
             tps.clearAllTransactions();
             let newList = response.data.playlist;
+    
             storeReducer({
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
                 payload: newList
-            }
-            );
+            });
+    
+            
+            store.newListCounter = counter + 1;
+            store.openEditPlaylistModal(newList);
 
-            // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-            history.push("/playlist/" + newList._id);
-        }
-        else {
+            
+        } else {
             console.log("FAILED TO CREATE A NEW LIST");
         }
-    }
+    };
+    
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = function () {
@@ -385,6 +439,28 @@ function GlobalStoreContextProvider(props) {
         return store.currentModal === CurrentModal.ERROR;
     }
 
+     
+     store.showEditPlaylistModal = function () {
+        storeReducer({
+            type: GlobalStoreActionType.EDIT_PLAYLIST,
+            payload: store.currentList
+        });
+    };
+   
+    store.openEditPlaylistModal = function (playlist) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LIST,
+            payload: playlist
+        });
+
+       
+        store.showEditPlaylistModal();
+    };
+
+    store.isEditPlaylistModalOpen = () => {
+        return store.currentModal === CurrentModal.EDIT_PLAYLIST;
+    };
+    
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
     // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
     // FUNCTIONS ARE setCurrentList, addMoveItemTransaction, addUpdateItemTransaction,
@@ -473,11 +549,7 @@ function GlobalStoreContextProvider(props) {
         // NOW MAKE IT OFFICIAL
         store.updateCurrentList();
     }
-    store.addNewSong = () => {
-        let playlistSize = store.getPlaylistSize();
-        store.addCreateSongTransaction(
-            playlistSize, "Untitled", "?", new Date().getFullYear(), "dQw4w9WgXcQ");
-    }
+    
     // THIS FUNCDTION ADDS A CreateSong_Transaction TO THE TRANSACTION STACK
     store.addCreateSongTransaction = (index, title, artist, year, youTubeId) => {
         // ADD A SONG ITEM AND ITS NUMBER

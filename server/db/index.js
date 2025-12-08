@@ -31,6 +31,19 @@ db.createUser = async function (userData) {
     }
 };
 
+db.updateUserByEmail = async function (email, updateData) {
+    try {
+        return await User.findOneAndUpdate(
+            { email: email },
+            updateData,
+            { new: true }
+        );
+    } catch (err) {
+        console.error("Error in updateUserByEmail:", err);
+        return null;
+    }
+};
+
 
 
 // Get all playlists belonging to a user

@@ -14,7 +14,11 @@ import { GlobalStoreContext } from '../store/index.js'
 */
 function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
-    store.history = useHistory();
+    const history = useHistory();     
+
+    store.history = history;   
+    if (!store.currentList) return null;     
+    
     
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {

@@ -72,11 +72,14 @@ export const getPlaylistPairs = async () => {
 };
 
 // Update playlist by ID
-export const updatePlaylistById = async (id, playlist) => {
+export const updatePlaylistById = async (id, { name, songs }) => {
     const response = await fetch(`${BASE_URL}/playlist/${id}`, {
         ...defaultOptions,
         method: 'PUT',
-        body: JSON.stringify({ playlist })
+        body: JSON.stringify({
+            name,
+            songs
+        })
     });
     return handleResponse(response);
 };

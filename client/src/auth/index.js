@@ -151,6 +151,52 @@ function AuthContextProvider(props) {
             });
         }
     };
+
+    auth.updateAccount = async function (userName, password, passwordVerify, avatar) {
+        console.log("UPDATING ACCOUNT");
+
+        try {
+            const response = await authRequestSender.updateAccount(
+                userName,
+                password,
+                passwordVerify,
+                avatar
+            );
+
+            if (response?.data?.user) {
+                
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user,
+                        loggedIn: true,
+                        errorMessage: null
+                    }
+                });
+
+                console.log("Account updated successfully!");
+            }
+
+            return response;
+
+        } catch (error) {
+            console.error("Update account failed:", error);
+
+            const message =
+                error?.response?.data?.errorMessage ||
+                error?.message ||
+                "Account update failed.";
+
+            authReducer({
+                type: AuthActionType.LOGIN_USER,
+                payload: {
+                    user: auth.user,
+                    loggedIn: true,
+                    errorMessage: message
+                }
+            });
+        }
+    };
     
 
      auth.logoutUser = async function() {

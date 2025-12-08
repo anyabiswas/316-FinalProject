@@ -1,160 +1,120 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom'
-import AuthContext from '../auth';
-import { GlobalStoreContext } from '../store'
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import AuthContext from "../auth";
 
-import EditToolbar from './EditToolbar'
-
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
-    const { store } = useContext(GlobalStoreContext);
+    const history = useHistory();
+
     const [anchorEl, setAnchorEl] = useState(null);
-    const isMenuOpen = Boolean(anchorEl);
+    const openMenu = (e) => setAnchorEl(e.target);
+    const closeMenu = () => setAnchorEl(null);
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleLogout = () => {
-        handleMenuClose();
-        auth.logoutUser();
-    }
-
-    const handleHouseClick = () => {
-        store.closeCurrentList();
-    }
-
-    const menuId = 'primary-search-account-menu';
-    const loggedOutMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
-        </Menu>
-    );
-    const loggedInMenu = 
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>
-                <Link to='/editaccount/'>Edit Account</Link>
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </Menu>        
-
-    let editToolbar = "";
-    let menu = loggedOutMenu;
-    if (auth.loggedIn) {
-        menu = loggedInMenu;
-        if (store.currentList) {
-            editToolbar = <EditToolbar />;
-        }
-    }
-    
-    function getAccountMenu(loggedIn) {
-        if (!loggedIn) {
-            
-            return <AccountCircle sx={{ fontSize: 40 }} />;
-        }
-
-      
-        return (
-            <img
-                src={auth.user?.avatar}
-                alt="avatar"
-                style={{
-                    width: "42px",
-                    height: "42px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                }}
-            />
-        );
-    }
+    const avatarIcon = auth.loggedIn
+        ? <Avatar src={auth.user?.avatar} sx={{ width: 40, height: 40 }} />
+        : <Avatar sx={{ width: 40, height: 40, bgcolor: "white", color: "#ff00cc" }} />;
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <AppBar
-                position="static"
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "#ff00cc",
+                boxShadow: "none"
+            }}>
+            
+            <Toolbar
                 sx={{
-                    backgroundColor: 'var(--banner-color)',
-                    boxShadow: 'none'
+                    width: "100%",
+                    maxWidth: "1200px",     
+                    margin: "0 auto",        
+                    display: "flex",
+                    alignItems: "center"
+                }}>
+
+<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+  
+    <IconButton sx={{ color: "white" }} onClick={() => history.push("/welcome")}>
+        ⌂
+    </IconButton>
+
+    {auth.loggedIn && (
+        <>
+            <Button
+                onClick={() => history.push("/playlists")}
+                sx={{
+                    backgroundColor: "#2c2c2c",
+                    color: "white",
+                    padding: "4px 14px",
+                    borderRadius: "12px",
+                    fontSize: "14px",
+                    textTransform: "none",
+                    "&:hover": { backgroundColor: "#1a1a1a" }
                 }}
             >
-                <Toolbar>
-                    <Typography
-                        variant="h4"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        <Link 
-                            onClick={handleHouseClick}
-                            style={{ textDecoration: 'none', color: 'white' }}
-                            to='/'
-                        >
-                            ⌂
-                        </Link>
+                Playlists
+            </Button>
+
+            <Button
+                onClick={() => history.push("/songs")}
+                sx={{
+                    backgroundColor: "#3366ff",
+                    color: "white",
+                    padding: "4px 14px",
+                    borderRadius: "12px",
+                    fontSize: "14px",
+                    textTransform: "none",
+                    "&:hover": { backgroundColor: "#1e4ccc" }
+                }}
+            >
+                Song Catalog
+            </Button>
+        </>
+    )}
+</Box>
+
+               
+                <Box sx={{ flexGrow: 1, textAlign: "center" }}>
+                    <Typography sx={{ color: "white", fontSize: "36px", fontWeight: 500 }}>
+                        The Playlister
                     </Typography>
+                </Box>
 
-                    <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
+               
+                <IconButton onClick={openMenu} sx={{ color: "white" }}>
+                    {avatarIcon}
+                </IconButton>
 
-                   
-                    <Box sx={{ height: "90px", display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            {getAccountMenu(auth.loggedIn)}
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-
-            {menu}
-        </Box>
+                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeMenu}>
+                    {!auth.loggedIn && (
+                        <>
+                            <MenuItem onClick={() => { closeMenu(); history.push("/login"); }}>Login</MenuItem>
+                            <MenuItem onClick={() => { closeMenu(); history.push("/register"); }}>
+                                Create Account
+                            </MenuItem>
+                        </>
+                    )}
+                    {auth.loggedIn && (
+                        <>
+                            <MenuItem onClick={() => { closeMenu(); history.push("/editaccount"); }}>
+                                Edit Account
+                            </MenuItem>
+                            <MenuItem onClick={() => { closeMenu(); auth.logoutUser(); history.push("/welcome"); }}>
+                                Logout
+                            </MenuItem>
+                        </>
+                    )}
+                </Menu>
+            </Toolbar>
+        </AppBar>
     );
 }

@@ -185,9 +185,77 @@ registerUser = async (req, res) => {
     }
 }
 
+updateAccount = async (req, res) => {
+    try {
+        console.log("Updating account...");
+
+        
+        const emailFromToken = auth.verifyUser(req);
+        if (!emailFromToken) {
+            return res.status(401).json({ errorMessage: "Unauthorized" });
+        }
+
+        
+        const existingUser = await db.findUserByEmail(emailFromToken);
+        if (!existingUser) {
+            return res.status(404).json({ errorMessage: "User not found" });
+        }
+
+        const { userName, password, passwordVerify, avatar } = req.body;
+
+        
+        if (password) {
+            if (password.length < 8) {
+                return res.status(400).json({
+                    errorMessage: "Password must be at least 8 characters."
+                });
+            }
+            if (password !== passwordVerify) {
+                return res.status(400).json({
+                    errorMessage: "Passwords do not match."
+                });
+            }
+        }
+
+        
+        const updateObj = {
+            userName: userName || existingUser.userName,
+            avatar: avatar || existingUser.avatar
+        };
+
+        
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            updateObj.passwordHash = await bcrypt.hash(password, salt);
+        }
+
+        
+        const updatedUser = await db.updateUserByEmail(emailFromToken, updateObj);
+
+        return res.status(200).json({
+            success: true,
+            user: {
+                userName: updatedUser.userName,
+                email: updatedUser.email,
+                avatar: updatedUser.avatar
+            }
+        });
+
+    } catch (err) {
+        console.error("Update account error:", err);
+        return res.status(500).json({
+            errorMessage: "Server error updating account"
+        });
+    }
+};
+
+
+
+
 module.exports = {
     getLoggedIn,
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser, 
+    updateAccount
 }

@@ -13,7 +13,8 @@ import {
     HomeScreen,
     SongsCatalogScreen,
     Statusbar,
-    WorkspaceScreen
+    WorkspaceScreen,
+    MUIEditPlaylistModal
 } from './components'
 /*
   This is the entry-point for our application. Notice that we
@@ -27,6 +28,7 @@ const App = () => {
             <AuthContextProvider>
                 <GlobalStoreContextProvider>              
                     <AppBanner />
+                    <MUIEditPlaylistModal />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />
 
@@ -35,7 +37,7 @@ const App = () => {
                         <Route path="/songs" exact component={SongsCatalogScreen} />
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
-                        <Route path="/edit-account" exact component={EditAccountScreen} />
+                        <Route path="/editaccount" exact component={EditAccountScreen} />
                         <Route path="/playlist/:id" exact component={WorkspaceScreen} />
                     </Switch>
                     <Statusbar />
