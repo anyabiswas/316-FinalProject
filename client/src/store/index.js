@@ -286,7 +286,7 @@ function GlobalStoreContextProvider(props) {
                                         playlist: playlist
                                     }
                                 });
-                                store.setCurrentList(id);
+                               
                             }
                         }
                         getListPairs(playlist);
@@ -449,11 +449,10 @@ function GlobalStoreContextProvider(props) {
    
     store.openEditPlaylistModal = function (playlist) {
         storeReducer({
-            type: GlobalStoreActionType.SET_CURRENT_LIST,
+            type: GlobalStoreActionType.EDIT_PLAYLIST,
             payload: playlist
         });
 
-       
         store.showEditPlaylistModal();
     };
 
@@ -482,7 +481,7 @@ function GlobalStoreContextProvider(props) {
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
                         payload: playlist
                     });
-                    history.push("/playlist/" + playlist._id);
+                    
                 }
             }
         }
