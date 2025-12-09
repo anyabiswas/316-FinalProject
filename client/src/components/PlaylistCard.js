@@ -15,10 +15,10 @@ function PlaylistCard(props) {
         await store.setEditingPlaylist(idNamePair._id); 
     };
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.stopPropagation();
-        store.markListForDeletion(idNamePair._id);
-    };
+        await store.markListForDeletion(idNamePair._id);
+    };    
 
     const handleCopy = async (e) => {
         e.stopPropagation();

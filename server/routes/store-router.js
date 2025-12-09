@@ -1,21 +1,19 @@
-/*
-    This is where we'll route all of the received http requests
-    into controller response functions.
-    
-    @author McKilla Gorilla
-*/
-const express = require('express')
-const StoreController = require('../controllers/store-controller')
-const router = express.Router()
-const auth = require('../auth')
+const express = require("express");
+const router = express.Router();
+const StoreController = require("../controllers/store-controller");
 
-router.post('/playlist', auth.verify, StoreController.createPlaylist)
-router.delete('/playlist/:id', auth.verify, StoreController.deletePlaylist)
-router.get('/playlist/:id', auth.verify, StoreController.getPlaylistById)
-router.get('/playlistpairs', auth.verify, StoreController.getPlaylistPairs)
-router.get('/playlists', auth.verify, StoreController.getPlaylists)
-router.put('/playlist/:id', auth.verify, StoreController.updatePlaylist)
+
+router.post("/playlist", StoreController.createPlaylist);
+router.get("/playlist/:id", StoreController.getPlaylistById);
+router.put("/playlist/:id", StoreController.updatePlaylist);
+router.delete("/playlist/:id", StoreController.deletePlaylist);
+
+router.post("/playlist/:id/copy", StoreController.copyPlaylist);
+router.get("/playlistpairs", StoreController.getPlaylistPairs);
+
 router.get("/songs", StoreController.getAllSongs);
+router.post("/playlist/:id/song/copy", StoreController.copySongInPlaylist);
+router.post("/playlist/:id/song/remove", StoreController.removeSongFromPlaylist);
+router.post("/playlist/:id/song/reorder", StoreController.reorderSongsInPlaylist);
 
-
-module.exports = router
+module.exports = router;

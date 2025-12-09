@@ -14,65 +14,54 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function MUIEditPlaylistModal() {
     const { store } = useContext(GlobalStoreContext);
+
     const list = store.currentPlaylist;
 
     const [name, setName] = useState("");
 
     useEffect(() => {
-        if (store.isEditPlaylistModalOpen() && list) {
+        if (list) {
             setName(list.name);
         }
-    }, [store.currentPlaylist, store.editPlaylistModalOpen]);
+    }, [list]);
 
-    if (!store.isEditPlaylistModalOpen() || !list) return null;
-
-    const handleClose = () => store.hideModals();
     const handleClearName = () => setName("");
 
-    const handleNameSubmit = () => {
-        store.renameCurrentPlaylist(name);
-    };
-
+    
     if (!store.isEditPlaylistModalOpen() || !list) return null;
 
     return (
         <Modal open={store.isEditPlaylistModalOpen()}>
-
-            <Box
-                sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "900px",
-                    bgcolor: "#f6f2d6",
-                    borderRadius: "8px",
-                    border: "4px solid #d9d5c5",
-                    overflow: "hidden"
-                }}
-            >
-                <Box
-                    sx={{
-                        bgcolor: "#32cd32",
-                        padding: "12px 20px",
-                        fontSize: "22px",
-                        fontWeight: "bold",
-                        color: "white"
-                    }}
-                >
+            <Box sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "900px",
+                bgcolor: "#f6f2d6",
+                borderRadius: "8px",
+                border: "4px solid #d9d5c5",
+                overflow: "hidden"
+            }}>
+                <Box sx={{
+                    bgcolor: "#32cd32",
+                    padding: "12px 20px",
+                    fontSize: "22px",
+                    fontWeight: "bold",
+                    color: "white"
+                }}>
                     Edit Playlist
                 </Box>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "15px 20px",
-                        bgcolor: "#dcdcdc",
-                        borderBottom: "2px solid #d9d5c5",
-                        gap: 2
-                    }}
-                >
+               
+                <Box sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "15px 20px",
+                    bgcolor: "#dcdcdc",
+                    borderBottom: "2px solid #d9d5c5",
+                    gap: 2
+                }}>
                     <TextField
                         fullWidth
                         value={name}
@@ -86,7 +75,6 @@ export default function MUIEditPlaylistModal() {
                             borderRadius: "6px"
                         }}
                     />
-
 
                     <IconButton onClick={handleClearName}>
                         <ClearIcon />
@@ -109,15 +97,14 @@ export default function MUIEditPlaylistModal() {
                     </Button>
                 </Box>
 
-                <Box
-                    sx={{
-                        padding: "20px",
-                        height: "360px",
-                        overflowY: "auto",
-                        borderBottom: "2px solid #d9d5c5",
-                        bgcolor: "#ffffff"
-                    }}
-                >
+                
+                <Box sx={{
+                    padding: "20px",
+                    height: "360px",
+                    overflowY: "auto",
+                    borderBottom: "2px solid #d9d5c5",
+                    bgcolor: "#ffffff"
+                }}>
                     {list.songs.map((song, index) => (
                         <Box
                             key={index}
@@ -158,50 +145,33 @@ export default function MUIEditPlaylistModal() {
                     ))}
                 </Box>
 
-                <Box
-                    sx={{
-                        bgcolor: "#c9f7c1",
-                        padding: "15px 25px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}
-                >
+                
+                <Box sx={{
+                    bgcolor: "#c9f7c1",
+                    padding: "15px 25px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                }}>
                     <Box sx={{ display: "flex", gap: 2 }}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                bgcolor: "#6a55d8",
-                                "&:hover": { bgcolor: "#5948c0" }
-                            }}
-                            onClick={store.undo}
-                        >
+                        <Button variant="contained" sx={{ bgcolor:"#6a55d8" }} onClick={store.undo}>
                             Undo
                         </Button>
-
-                        <Button
-                            variant="contained"
-                            sx={{
-                                bgcolor: "#6a55d8",
-                                "&:hover": { bgcolor: "#5948c0" }
-                            }}
-                            onClick={store.redo}
-                        >
+                        <Button variant="contained" sx={{ bgcolor:"#6a55d8" }} onClick={store.redo}>
                             Redo
                         </Button>
                     </Box>
 
                     <Button
                         variant="contained"
-                        sx={{
-                            bgcolor: "#1e7a32",
-                            "&:hover": { bgcolor: "#176028" }
+                        sx={{ bgcolor:"#1e7a32" }}
+                        onClick={() => {
+                            store.commitPlaylistChanges();
+                            store.hideModals();  
                         }}
-                        onClick={store.commitPlaylistChanges}   
                     >
                         Close
                     </Button>
-
                 </Box>
             </Box>
         </Modal>
